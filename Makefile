@@ -1,17 +1,17 @@
 install:
-    uv sync
+	uv sync
 
 collectstatic:
-    python manage.py collectstatic --noinput
+	python manage.py collectstatic --noinput
 
 migrate:
-    python manage.py migrate
+	python manage.py migrate
 
 build:
-    ./build.sh
+	./build.sh
 
 render-start:
-    gunicorn hexlet_code.wsgi
+	gunicorn hexlet_code.wsgi
 
 start:
-    python manage.py runserver
+	python manage.py runserver
