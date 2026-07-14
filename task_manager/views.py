@@ -1,4 +1,17 @@
-from django.http import HttpResponse  # ✅ ПРАВИЛЬНО
+from django.views.generic import TemplateView
 
-def index(request):
-    return HttpResponse("Welcome to Task Manager!")
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
+class UsersView(TemplateView):
+    template_name = 'users.html'
+
+
+class LoginView(TemplateView):
+    template_name = 'login.html'
+
+
+class RegisterView(TemplateView):
+    template_name = 'register.html'

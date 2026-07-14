@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<h1 class="my-4">{% trans "Users" %}</h1>
+<div class="alert alert-info" role="alert">
+    {% trans "No users registered yet." %}
+</div>
+{% endblock %}
