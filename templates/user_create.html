@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block title %}{% trans "Register" %}{% endblock %}
+
+{% block content %}
+<div class="container col-md-6">
+    <h1 class="my-4">{% trans "Register" %}</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="id_first_name" class="form-label">{% trans "First name" %}</label>
+            <input type="text" name="first_name" class="form-control" id="id_first_name" value="{{ form.first_name.value|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="id_last_name" class="form-label">{% trans "Last name" %}</label>
+            <input type="text" name="last_name" class="form-control" id="id_last_name" value="{{ form.last_name.value|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="id_username" class="form-label">{% trans "Username" %}</label>
+            <input type="text" name="username" class="form-control" id="id_username" value="{{ form.username.value|default:'' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">{% trans "Password" %}</label>
+            <div class="input-group">
+                <input type="password" name="password1" class="form-control" id="id_password1" required>
+                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password1', this)">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password2" class="form-label">{% trans "Confirm Password" %}</label>
+            <div class="input-group">
+                <input type="password" name="password2" class="form-control" id="id_password2" required>
+                <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password2', this)">
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
+    </form>
+</div>
+
+<script>
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    const icon = button.querySelector('i');
+
+    if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'bi bi-eye-slash';
+    } else {
+        input.type = 'password';
+        icon.className = 'bi bi-eye';
+    }
+}
+</script>
+{% endblock %}

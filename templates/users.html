@@ -1,9 +1,40 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %}{% trans "Users" %}{% endblock %}
+
 {% block content %}
 <h1 class="my-4">{% trans "Users" %}</h1>
-<div class="alert alert-info" role="alert">
-    {% trans "No users registered yet." %}
-</div>
+
+{% if users %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>{% trans "Username" %}</th>
+                <th>{% trans "Full name" %}</th>
+                <th>{% trans "Created at" %}</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.get_full_name }}</td>
+                    <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'user_update' user.pk %}" class="btn btn-sm btn-primary">{% trans "Edit" %}</a>
+                        <a href="{% url 'user_delete' user.pk %}" class="btn btn-sm btn-danger">{% trans "Delete" %}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        {% trans "No users registered yet." %}
+    </div>
+{% endif %}
 {% endblock %}

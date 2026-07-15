@@ -9,12 +9,16 @@
             {% trans "Manage your tasks efficiently and effectively" %}
         </p>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="{% url 'register' %}" class="btn btn-primary btn-lg px-4 gap-3">
-                {% trans "Get Started" %}
-            </a>
-            <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4">
-                {% trans "Sign In" %}
-            </a>
+            {% if user.is_authenticated %}
+                <p>{% trans "Welcome" %}, {{ user.get_full_name|default:user.username }}!</p>
+            {% else %}
+                <a href="{% url 'user_create' %}" class="btn btn-primary btn-lg px-4 gap-3">
+                    {% trans "Get Started" %}
+                </a>
+                <a href="{% url 'login' %}" class="btn btn-outline-secondary btn-lg px-4">
+                    {% trans "Sign In" %}
+                </a>
+            {% endif %}
         </div>
     </div>
 </div>

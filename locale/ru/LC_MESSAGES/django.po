@@ -32,6 +32,9 @@ msgstr "Вход"
 msgid "Register"
 msgstr "Регистрация"
 
+msgid "Logout"
+msgstr "Выход"
+
 msgid "No users registered yet."
 msgstr "Пока нет зарегистрированных пользователей."
 
@@ -44,11 +47,59 @@ msgstr "Пароль"
 msgid "Confirm Password"
 msgstr "Подтверждение пароля"
 
-msgid "Email"
-msgstr "Электронная почта"
+msgid "First name"
+msgstr "Имя"
 
-msgid "Don't have an account?"
-msgstr "Нет аккаунта?"
+msgid "Last name"
+msgstr "Фамилия"
 
-msgid "Already have an account?"
-msgstr "Уже есть аккаунт?"
+msgid "Full name"
+msgstr "Полное имя"
+
+msgid "Created at"
+msgstr "Дата создания"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Delete"
+msgstr "Удалить"
+
+msgid "Yes, delete"
+msgstr "Да, удалить"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Edit user"
+msgstr "Редактирование пользователя"
+
+msgid "Delete user"
+msgstr "Удаление пользователя"
+
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены, что хотите удалить"
+
+msgid "Welcome"
+msgstr "Добро пожаловать"
+
+msgid "Пользователь успешно зарегистрирован"
+msgstr "Пользователь успешно зарегистрирован"
+
+msgid "Вы залогинены"
+msgstr "Вы залогинены"
+
+msgid "Вы разлогинены"
+msgstr "Вы разлогинены"
+
+msgid "Пользователь успешно изменен"
+msgstr "Пользователь успешно изменен"
+
+msgid "Пользователь успешно удален"
+msgstr "Пользователь успешно удален"
+
+msgid "У вас нет прав для изменения"
+msgstr "У вас нет прав для изменения"
+
+msgid "User with this username already exists."
+msgstr "Пользователь с таким именем уже существует."
