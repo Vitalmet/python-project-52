@@ -1,0 +1,54 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: task-manager\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Task Manager"
+msgstr "Менеджер задач"
+
+msgid "Manage your tasks efficiently and effectively"
+msgstr "Управляйте своими задачами эффективно и результативно"
+
+msgid "Get Started"
+msgstr "Начать"
+
+msgid "Sign In"
+msgstr "Войти"
+
+msgid "Users"
+msgstr "Пользователи"
+
+msgid "Login"
+msgstr "Вход"
+
+msgid "Register"
+msgstr "Регистрация"
+
+msgid "No users registered yet."
+msgstr "Пока нет зарегистрированных пользователей."
+
+msgid "Username"
+msgstr "Имя пользователя"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "Confirm Password"
+msgstr "Подтверждение пароля"
+
+msgid "Email"
+msgstr "Электронная почта"
+
+msgid "Don't have an account?"
+msgstr "Нет аккаунта?"
+
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
