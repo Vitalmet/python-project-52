@@ -103,3 +103,41 @@ msgstr "У вас нет прав для изменения"
 
 msgid "User with this username already exists."
 msgstr "Пользователь с таким именем уже существует."
+
+# ===== НОВЫЕ ПЕРЕВОДЫ ДЛЯ СТАТУСОВ =====
+
+msgid "Statuses"
+msgstr "Статусы"
+
+msgid "Create status"
+msgstr "Создать статус"
+
+msgid "Edit status"
+msgstr "Редактирование статуса"
+
+msgid "Delete status"
+msgstr "Удаление статуса"
+
+msgid "No statuses created yet."
+msgstr "Пока нет созданных статусов."
+
+msgid "Status successfully created"
+msgstr "Статус успешно создан"
+
+msgid "Status successfully updated"
+msgstr "Статус успешно изменен"
+
+msgid "Status successfully deleted"
+msgstr "Статус успешно удален"
+
+msgid "Cannot delete status"
+msgstr "Невозможно удалить статус"
+
+msgid "Status with this name already exists."
+msgstr "Статус с таким именем уже существует."
+
+msgid "Create"
+msgstr "Создать"
+
+msgid "Name"
+msgstr "Имя"

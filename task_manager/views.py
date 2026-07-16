@@ -1,27 +1,24 @@
-
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
-from django.shortcuts import get_object_or_404
-from django.contrib.auth import login as auth_login
-from django.contrib.auth.forms import AuthenticationForm
-from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from .models import Status
+from .forms import CustomUserCreationForm, CustomUserChangeForm, StatusForm
 
 
 class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class UsersView(ListView):
+class UsersView(LoginRequiredMixin, ListView):
     model = User
     template_name = 'users.html'
     context_object_name = 'users'
@@ -64,7 +61,6 @@ class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        # Выход из системы после удаления
         logout(request)
         return super().post(request, *args, **kwargs)
 
@@ -80,3 +76,43 @@ class CustomLoginView(LoginView):
         response = super().form_valid(form)
         messages.success(self.request, self.success_message)
         return response
+
+
+# ========== CRUD для статусов ==========
+
+class StatusesView(LoginRequiredMixin, ListView):
+    model = Status
+    template_name = 'statuses.html'
+    context_object_name = 'statuses'
+    ordering = ['id']
+
+
+class StatusCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Status
+    form_class = StatusForm
+    template_name = 'status_create.html'
+    success_url = reverse_lazy('statuses')
+    success_message = 'Статус успешно создан'
+
+
+class StatusUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Status
+    form_class = StatusForm
+    template_name = 'status_update.html'
+    success_url = reverse_lazy('statuses')
+    success_message = 'Статус успешно изменен'
+
+
+class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Status
+    template_name = 'status_delete.html'
+    success_url = reverse_lazy('statuses')
+    success_message = 'Статус успешно удален'
+
+    def post(self, request, *args, **kwargs):
+        status = self.get_object()
+        # Проверка, есть ли задачи со статусом
+        if hasattr(status, 'tasks') and status.tasks.exists():
+            messages.error(request, 'Невозможно удалить статус')
+            return redirect('statuses')
+        return super().post(request, *args, **kwargs)
