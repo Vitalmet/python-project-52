@@ -141,3 +141,56 @@ msgstr "Создать"
 
 msgid "Name"
 msgstr "Имя"
+
+# ===== ПЕРЕВОДЫ ДЛЯ ЗАДАЧ =====
+
+msgid "Tasks"
+msgstr "Задачи"
+
+msgid "Create task"
+msgstr "Создать задачу"
+
+msgid "Edit task"
+msgstr "Редактирование задачи"
+
+msgid "Delete task"
+msgstr "Удаление задачи"
+
+msgid "Task detail"
+msgstr "Просмотр задачи"
+
+msgid "No tasks created yet."
+msgstr "Пока нет созданных задач."
+
+msgid "Task successfully created"
+msgstr "Задача успешно создана"
+
+msgid "Task successfully updated"
+msgstr "Задача успешно изменена"
+
+msgid "Task successfully deleted"
+msgstr "Задача успешно удалена"
+
+msgid "Task can only be deleted by its author"
+msgstr "Задачу может удалить только ее автор"
+
+msgid "Task with this name already exists."
+msgstr "Задача с таким именем уже существует."
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Executor"
+msgstr "Исполнитель"
+
+msgid "Author"
+msgstr "Автор"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Cannot delete user because they are associated with tasks"
+msgstr "Невозможно удалить пользователя, так как он связан с задачами"

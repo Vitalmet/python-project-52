@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
@@ -10,8 +10,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from .models import Status
-from .forms import CustomUserCreationForm, CustomUserChangeForm, StatusForm
+from .models import Status, Task
+from .forms import CustomUserCreationForm, CustomUserChangeForm, StatusForm, TaskForm
 
 
 class IndexView(TemplateView):
@@ -116,3 +116,53 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
             messages.error(request, 'Невозможно удалить статус')
             return redirect('statuses')
         return super().post(request, *args, **kwargs)
+
+
+
+# ========== CRUD для задач ==========
+
+class TasksView(LoginRequiredMixin, ListView):
+    model = Task
+    template_name = 'tasks.html'
+    context_object_name = 'tasks'
+    ordering = ['id']
+
+
+class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_create.html'
+    success_url = reverse_lazy('tasks')
+    success_message = 'Задача успешно создана'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_update.html'
+    success_url = reverse_lazy('tasks')
+    success_message = 'Задача успешно изменена'
+
+
+class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Task
+    template_name = 'task_delete.html'
+    success_url = reverse_lazy('tasks')
+    success_message = 'Задача успешно удалена'
+
+    def dispatch(self, request, *args, **kwargs):
+        task = self.get_object()
+        if request.user != task.author:
+            messages.error(request, 'Задачу может удалить только ее автор')
+            return redirect('tasks')
+        return super().dispatch(request, *args, **kwargs)
+
+
+class TaskDetailView(LoginRequiredMixin, DetailView):
+    model = Task
+    template_name = 'task_detail.html'
+    context_object_name = 'task'

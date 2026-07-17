@@ -1,0 +1,60 @@
+# База данных
+db.sqlite3
+db.sqlite3-journal
+
+# Скомпилированные переводы
+*.mo
+
+# Файлы IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Кэш Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Виртуальное окружение
+.venv/
+venv/
+ENV/
+env/
+
+# Переменные окружения
+.env
+.env.local
+
+# Статические файлы
+/static/
+/staticfiles/
+/media/
+
+# Логи
+*.log
+
+# Файлы сборки
+*.egg-info/
+*.egg
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Файлы pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Файлы mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Файлы миграций в __pycache__
+task_manager/migrations/__pycache__/

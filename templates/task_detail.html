@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Task detail" %}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">{% trans "Task detail" %}</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ task.name }}</h5>
+            
+            <p class="card-text">
+                <strong>{% trans "Description" %}:</strong><br>
+                {{ task.description|default:"-" }}
+            </p>
+            
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <strong>{% trans "Status" %}:</strong> {{ task.status.name }}
+                </li>
+                <li class="list-group-item">
+                    <strong>{% trans "Author" %}:</strong> 
+                    {{ task.author.get_full_name|default:task.author.username }}
+                </li>
+                <li class="list-group-item">
+                    <strong>{% trans "Executor" %}:</strong> 
+                    {{ task.executor.get_full_name|default:task.executor.username|default:"-" }}
+                </li>
+                <li class="list-group-item">
+                    <strong>{% trans "Created at" %}:</strong> 
+                    {{ task.created_at|date:"d.m.Y H:i" }}
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'tasks' %}" class="btn btn-secondary">{% trans "Back" %}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
