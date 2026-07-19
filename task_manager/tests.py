@@ -28,20 +28,21 @@ class UserCRUDTest(TestCase):
         self.assertEqual(str(messages[0]), 'Пользователь успешно зарегистрирован')
         self.assertRedirects(response, reverse('login'))
 
-    def test_user_login_logout(self):
-        """Тест входа и выхода"""
-        # Вход
+    def test_user_login(self):
+        """Тест входа"""
         response = self.client.post(reverse('login'), {
             'username': 'testuser',
-            'password': 'TestPass123!'
+            'password': 'TestPass123!',
         }, follow=True)
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(str(messages[0]), 'Вы залогинены')
 
-        # Выход
+    def test_user_logout(self):
+        """Тест выхода"""
+        self.client.login(username='testuser', password='TestPass123!')
         response = self.client.post(reverse('logout'), follow=True)
-        messages = list(get_messages(response.wsgi_request))
-        self.assertTrue(any('разлогинены' in str(msg) for msg in messages))
+        self.assertFalse('_auth_user_id' in self.client.session)
+
 
     def test_user_update(self):
         """Тест обновления пользователя"""
@@ -163,7 +164,10 @@ class TaskCRUDTest(TestCase):
         self.client.login(username='testuser', password='TestPass123!')
         response = self.client.post(
             reverse('task_update', args=[self.task.pk]),
-            {'name': 'Updated Task', 'status': self.status.id},
+            {'name': 'Updated Task',
+             'status': self.status.id,
+             'executor': self.user2.id
+            },
             follow=True
         )
         self.task.refresh_from_db()
@@ -193,3 +197,78 @@ class TaskCRUDTest(TestCase):
         response = self.client.get(reverse('task_detail', args=[self.task.pk]))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Existing Task')
+
+    class LabelCRUDTest(TestCase):
+        def setUp(self):
+            self.client = Client()
+            self.user = User.objects.create_user(
+                username='testuser',
+                password='TestPass123!'
+            )
+            self.label_data = {
+                'name': 'New Label'
+            }
+            self.label = Label.objects.create(name='Existing Label')
+
+        def test_label_list_requires_login(self):
+            """Тест: список меток требует авторизации"""
+            response = self.client.get(reverse('labels'))
+            self.assertRedirects(response, f'{reverse("login")}?next={reverse("labels")}')
+
+        def test_label_create(self):
+            """Тест: создание метки"""
+            self.client.login(username='testuser', password='TestPass123!')
+            response = self.client.post(
+                reverse('label_create'),
+                self.label_data,
+                follow=True
+            )
+            self.assertTrue(Label.objects.filter(name='New Label').exists())
+            messages = list(get_messages(response.wsgi_request))
+            self.assertEqual(str(messages[0]), 'Метка успешно создана')
+
+        def test_label_update(self):
+            """Тест: обновление метки"""
+            self.client.login(username='testuser', password='TestPass123!')
+            response = self.client.post(
+                reverse('label_update', args=[self.label.pk]),
+                {'name': 'Updated Label'},
+                follow=True
+            )
+            self.label.refresh_from_db()
+            self.assertEqual(self.label.name, 'Updated Label')
+            messages = list(get_messages(response.wsgi_request))
+            self.assertEqual(str(messages[0]), 'Метка успешно изменена')
+
+        def test_label_delete(self):
+            """Тест: удаление метки"""
+            self.client.login(username='testuser', password='TestPass123!')
+            label = Label.objects.create(name='To Delete')
+            response = self.client.post(
+                reverse('label_delete', args=[label.pk]),
+                follow=True
+            )
+            self.assertFalse(Label.objects.filter(name='To Delete').exists())
+            messages = list(get_messages(response.wsgi_request))
+            self.assertEqual(str(messages[0]), 'Метка успешно удалена')
+
+        def test_label_delete_with_tasks(self):
+            """Тест: удаление метки, связанной с задачей"""
+            self.client.login(username='testuser', password='TestPass123!')
+            status = Status.objects.create(name='New')
+            label = Label.objects.create(name='In Use')
+            task = Task.objects.create(
+                name='Task with label',
+                status=status,
+                author=self.user,
+                executor=self.user
+            )
+            task.labels.add(label)
+
+            response = self.client.post(
+                reverse('label_delete', args=[label.pk]),
+                follow=True
+            )
+            self.assertTrue(Label.objects.filter(pk=label.pk).exists())
+            messages = list(get_messages(response.wsgi_request))
+            self.assertEqual(str(messages[0]), 'Невозможно удалить метку')

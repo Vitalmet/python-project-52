@@ -19,6 +19,7 @@
                 <th>{% trans "Status" %}</th>
                 <th>{% trans "Author" %}</th>
                 <th>{% trans "Executor" %}</th>
+                <th>{% trans "Labels" %}</th>
                 <th>{% trans "Created at" %}</th>
                 <th></th>
             </tr>
@@ -31,6 +32,13 @@
                     <td>{{ task.status.name }}</td>
                     <td>{{ task.author.get_full_name|default:task.author.username }}</td>
                     <td>{{ task.executor.get_full_name|default:task.executor.username|default:"-" }}</td>
+                    <td>
+                        {% for label in task.labels.all %}
+                            <span class="badge bg-secondary">{{ label.name }}</span>
+                        {% empty %}
+                            <span class="text-muted">-</span>
+                        {% endfor %}
+                    </td>
                     <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
                     <td>
                         <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-info">

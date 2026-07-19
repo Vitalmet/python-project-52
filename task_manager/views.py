@@ -10,8 +10,14 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from .models import Status, Task
-from .forms import CustomUserCreationForm, CustomUserChangeForm, StatusForm, TaskForm
+from .models import Status, Task, Label
+from .forms import (
+    CustomUserCreationForm,
+    CustomUserChangeForm,
+    StatusForm,
+    TaskForm,
+    LabelForm
+)
 
 
 class IndexView(TemplateView):
@@ -166,3 +172,42 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
     model = Task
     template_name = 'task_detail.html'
     context_object_name = 'task'
+
+
+# ========== CRUD для меток ==========
+
+class LabelsView(LoginRequiredMixin, ListView):
+    model = Label
+    template_name = 'labels.html'
+    context_object_name = 'labels'
+    ordering = ['id']
+
+
+class LabelCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    model = Label
+    form_class = LabelForm
+    template_name = 'label_create.html'
+    success_url = reverse_lazy('labels')
+    success_message = 'Метка успешно создана'
+
+
+class LabelUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Label
+    form_class = LabelForm
+    template_name = 'label_update.html'
+    success_url = reverse_lazy('labels')
+    success_message = 'Метка успешно изменена'
+
+
+class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = Label
+    template_name = 'label_delete.html'
+    success_url = reverse_lazy('labels')
+    success_message = 'Метка успешно удалена'
+
+    def post(self, request, *args, **kwargs):
+        label = self.get_object()
+        if label.tasks.exists():
+            messages.error(request, 'Невозможно удалить метку')
+            return redirect('labels')
+        return super().post(request, *args, **kwargs)

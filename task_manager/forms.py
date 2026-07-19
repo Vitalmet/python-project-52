@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from .models import Status, Task
+from .models import Status, Task, Label
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -94,6 +94,24 @@ class StatusForm(forms.ModelForm):
         return name
 
 
+class LabelForm(forms.ModelForm):
+    name = forms.CharField(
+        max_length=100,
+        label=_('Name'),
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    class Meta:
+        model = Label
+        fields = ['name']
+
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if Label.objects.filter(name=name).exists():
+            raise ValidationError(_('Label with this name already exists.'))
+        return name
+
+
 class TaskForm(forms.ModelForm):
     name = forms.CharField(
         max_length=150,
@@ -116,10 +134,16 @@ class TaskForm(forms.ModelForm):
         required=False,
         widget=forms.Select(attrs={'class': 'form-select'})
     )
+    labels = forms.ModelMultipleChoiceField(
+        queryset=Label.objects.all(),
+        label=_('Labels'),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'form-select'})
+    )
 
     class Meta:
         model = Task
-        fields = ['name', 'description', 'status', 'executor']
+        fields = ['name', 'description', 'status', 'executor', 'labels']
 
     def clean_name(self):
         name = self.cleaned_data.get('name')

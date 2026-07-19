@@ -194,3 +194,35 @@ msgstr "Назад"
 
 msgid "Cannot delete user because they are associated with tasks"
 msgstr "Невозможно удалить пользователя, так как он связан с задачами"
+
+# ===== ПЕРЕВОДЫ ДЛЯ МЕТОК =====
+
+msgid "Labels"
+msgstr "Метки"
+
+msgid "Create label"
+msgstr "Создать метку"
+
+msgid "Edit label"
+msgstr "Редактирование метки"
+
+msgid "Delete label"
+msgstr "Удаление метки"
+
+msgid "No labels created yet."
+msgstr "Пока нет созданных меток."
+
+msgid "Label successfully created"
+msgstr "Метка успешно создана"
+
+msgid "Label successfully updated"
+msgstr "Метка успешно изменена"
+
+msgid "Label successfully deleted"
+msgstr "Метка успешно удалена"
+
+msgid "Cannot delete label"
+msgstr "Невозможно удалить метку"
+
+msgid "Label with this name already exists."
+msgstr "Метка с таким именем уже существует."

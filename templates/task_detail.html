@@ -32,6 +32,14 @@
                     <strong>{% trans "Created at" %}:</strong> 
                     {{ task.created_at|date:"d.m.Y H:i" }}
                 </li>
+                <li class="list-group-item">
+                    <strong>{% trans "Labels" %}:</strong>
+                    {% for label in task.labels.all %}
+                        <span class="badge bg-secondary">{{ label.name }}</span>
+                    {% empty %}
+                        <span class="text-muted">-</span>
+                    {% endfor %}
+                </li>
             </ul>
         </div>
         <div class="card-footer">
