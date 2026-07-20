@@ -10,26 +10,26 @@ class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(
         max_length=150,
         required=False,
-        label=_('First name'),
+        label='Имя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     last_name = forms.CharField(
         max_length=150,
         required=False,
-        label=_('Last name'),
+        label='Фамилия',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     username = forms.CharField(
         max_length=150,
-        label=_('Username'),
+        label='Имя пользователя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     password1 = forms.CharField(
-        label=_('Password'),
+        label='Пароль',
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
     password2 = forms.CharField(
-        label=_('Confirm Password'),
+        label='Подтверждение пароля',
         widget=forms.PasswordInput(attrs={'class': 'form-control'})
     )
 
@@ -50,18 +50,18 @@ class CustomUserChangeForm(UserChangeForm):
     first_name = forms.CharField(
         max_length=150,
         required=False,
-        label=_('First name'),
+        label='Имя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     last_name = forms.CharField(
         max_length=150,
         required=False,
-        label=_('Last name'),
+        label='Фамилия',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     username = forms.CharField(
         max_length=150,
-        label=_('Username'),
+        label='Имя пользователя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
@@ -79,7 +79,7 @@ class CustomUserChangeForm(UserChangeForm):
 class StatusForm(forms.ModelForm):
     name = forms.CharField(
         max_length=100,
-        label=_('Name'),
+        label='Имя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
@@ -97,7 +97,7 @@ class StatusForm(forms.ModelForm):
 class LabelForm(forms.ModelForm):
     name = forms.CharField(
         max_length=100,
-        label=_('Name'),
+        label='Имя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
@@ -115,28 +115,28 @@ class LabelForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     name = forms.CharField(
         max_length=150,
-        label=_('Name'),
+        label='Имя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
     description = forms.CharField(
-        label=_('Description'),
+        label='Описание',
         required=False,
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5})
     )
     status = forms.ModelChoiceField(
         queryset=Status.objects.all(),
-        label=_('Status'),
+        label='Статус',
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     executor = forms.ModelChoiceField(
         queryset=User.objects.all(),
-        label=_('Executor'),
+        label='Исполнитель',
         required=False,
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     labels = forms.ModelMultipleChoiceField(
         queryset=Label.objects.all(),
-        label=_('Labels'),
+        label='Метки',
         required=False,
         widget=forms.SelectMultiple(attrs={'class': 'form-select'})
     )

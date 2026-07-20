@@ -1,39 +1,39 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Task detail" %}{% endblock %}
+{% block title %}Просмотр задачи{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1 class="my-4">{% trans "Task detail" %}</h1>
-    
+    <h1 class="my-4">Просмотр задачи</h1>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">{{ task.name }}</h5>
-            
+
             <p class="card-text">
-                <strong>{% trans "Description" %}:</strong><br>
+                <strong>Описание:</strong><br>
                 {{ task.description|default:"-" }}
             </p>
-            
+
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <strong>{% trans "Status" %}:</strong> {{ task.status.name }}
+                    <strong>Статус:</strong> {{ task.status.name }}
                 </li>
                 <li class="list-group-item">
-                    <strong>{% trans "Author" %}:</strong> 
+                    <strong>Автор:</strong>
                     {{ task.author.get_full_name|default:task.author.username }}
                 </li>
                 <li class="list-group-item">
-                    <strong>{% trans "Executor" %}:</strong> 
+                    <strong>Исполнитель:</strong>
                     {{ task.executor.get_full_name|default:task.executor.username|default:"-" }}
                 </li>
                 <li class="list-group-item">
-                    <strong>{% trans "Created at" %}:</strong> 
+                    <strong>Дата создания:</strong>
                     {{ task.created_at|date:"d.m.Y H:i" }}
                 </li>
                 <li class="list-group-item">
-                    <strong>{% trans "Labels" %}:</strong>
+                    <strong>Метки:</strong>
                     {% for label in task.labels.all %}
                         <span class="badge bg-secondary">{{ label.name }}</span>
                     {% empty %}
@@ -43,7 +43,7 @@
             </ul>
         </div>
         <div class="card-footer">
-            <a href="{% url 'tasks' %}" class="btn btn-secondary">{% trans "Back" %}</a>
+            <a href="{% url 'tasks' %}" class="btn btn-secondary">Назад</a>
         </div>
     </div>
 </div>

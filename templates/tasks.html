@@ -2,13 +2,13 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-{% block title %}{% trans "Tasks" %}{% endblock %}
+{% block title %}Задачи{% endblock %}
 
 {% block content %}
-<h1 class="my-4">{% trans "Tasks" %}</h1>
+<h1 class="my-4">Задачи</h1>
 
 <a href="{% url 'task_create' %}" class="btn btn-primary mb-3">
-    {% trans "Create task" %}
+    Создать задачу
 </a>
 
 <!-- Форма фильтрации -->
@@ -31,12 +31,12 @@
                 <div class="form-check">
                     {{ filter.form.self_tasks }}
                     <label class="form-check-label" for="{{ filter.form.self_tasks.id_for_label }}">
-                        {% trans "Only my tasks" %}
+                        Только свои задачи
                     </label>
                 </div>
             </div>
             <div class="col-md-1 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary w-100">{% trans "Apply" %}</button>
+                <button type="submit" class="btn btn-primary w-100">Применить</button>
             </div>
         </form>
     </div>
@@ -47,12 +47,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>{% trans "Name" %}</th>
-                <th>{% trans "Status" %}</th>
-                <th>{% trans "Author" %}</th>
-                <th>{% trans "Executor" %}</th>
-                <th>{% trans "Labels" %}</th>
-                <th>{% trans "Created at" %}</th>
+                <th>Имя</th>
+                <th>Статус</th>
+                <th>Автор</th>
+                <th>Исполнитель</th>
+                <th>Метки</th>
+                <th>Дата создания</th>
                 <th></th>
             </tr>
         </thead>
@@ -74,13 +74,13 @@
                     <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
                     <td>
                         <a href="{% url 'task_detail' task.pk %}" class="btn btn-sm btn-info">
-                            {% trans "Show" %}
+                            Показать
                         </a>
                         <a href="{% url 'task_update' task.pk %}" class="btn btn-sm btn-primary">
-                            {% trans "Edit" %}
+                            Изменить
                         </a>
                         <a href="{% url 'task_delete' task.pk %}" class="btn btn-sm btn-danger">
-                            {% trans "Delete" %}
+                            Удалить
                         </a>
                     </td>
                 </tr>
@@ -89,7 +89,7 @@
     </table>
 {% else %}
     <div class="alert alert-info" role="alert">
-        {% trans "No tasks created yet." %}
+        Пока нет созданных задач.
     </div>
 {% endif %}
 {% endblock %}

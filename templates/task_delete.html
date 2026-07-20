@@ -9,8 +9,8 @@
     <p>{% trans "Are you sure you want to delete" %} "{{ task.name }}"?</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">{% trans "Yes, delete" %}</button>
-        <a href="{% url 'tasks' %}" class="btn btn-secondary">{% trans "Cancel" %}</a>
+        <button type="submit" class="btn btn-danger">Да, удалить</button>
+        <a href="{% url 'tasks' %}" class="btn btn-secondary">Отмена</a>
     </form>
 </div>
 {% endblock %}
