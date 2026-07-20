@@ -1,6 +1,6 @@
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib import messages
