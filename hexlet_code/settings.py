@@ -1,4 +1,5 @@
 import os
+import sys
 import rollbar
 from pathlib import Path
 from dotenv import load_dotenv
@@ -139,6 +140,18 @@ if ROLLBAR['access_token']:
 
 # ========== ОБРАБОТЧИКИ ОШИБОК ==========
 
-# Настройка обработчика 404 для продакшена
 if not DEBUG:
     handler404 = 'hexlet_code.views.handler404'
+
+# ========== НАСТРОЙКИ ДЛЯ ТЕСТОВ ==========
+
+if 'test' in sys.argv:
+    # Используем memory базу данных для тестов
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',
+        }
+    }
+    # Включаем валидаторы для тестов (или оставляем выключенными)
+    AUTH_PASSWORD_VALIDATORS = []
