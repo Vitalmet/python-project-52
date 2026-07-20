@@ -11,6 +11,8 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from .models import Status, Task, Label
+from django_filters.views import FilterView
+from .filters import TaskFilter
 from .forms import (
     CustomUserCreationForm,
     CustomUserChangeForm,
@@ -211,3 +213,29 @@ class LabelDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
             messages.error(request, 'Невозможно удалить метку')
             return redirect('labels')
         return super().post(request, *args, **kwargs)
+
+
+# ========== CRUD для фильтрации ==========
+
+class TasksView(LoginRequiredMixin, FilterView):
+    model = Task
+    template_name = 'tasks.html'
+    context_object_name = 'tasks'
+    filterset_class = TaskFilter
+    ordering = ['id']
+    paginate_by = 10  # Опционально: пагинация
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        # Применяем фильтр
+        self.filterset = self.filterset_class(
+            self.request.GET,
+            queryset=queryset,
+            request=self.request
+        )
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.filterset
+        return context

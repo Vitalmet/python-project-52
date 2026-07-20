@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 {% load i18n %}
 
 {% block title %}{% trans "Tasks" %}{% endblock %}
@@ -9,6 +10,37 @@
 <a href="{% url 'task_create' %}" class="btn btn-primary mb-3">
     {% trans "Create task" %}
 </a>
+
+<!-- Форма фильтрации -->
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="get" class="row g-3">
+            <div class="col-md-3">
+                {{ filter.form.status.label_tag }}
+                {{ filter.form.status }}
+            </div>
+            <div class="col-md-3">
+                {{ filter.form.executor.label_tag }}
+                {{ filter.form.executor }}
+            </div>
+            <div class="col-md-3">
+                {{ filter.form.labels.label_tag }}
+                {{ filter.form.labels }}
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <div class="form-check">
+                    {{ filter.form.self_tasks }}
+                    <label class="form-check-label" for="{{ filter.form.self_tasks.id_for_label }}">
+                        {% trans "Only my tasks" %}
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">{% trans "Apply" %}</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {% if tasks %}
     <table class="table table-striped">

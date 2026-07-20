@@ -226,3 +226,14 @@ msgstr "Невозможно удалить метку"
 
 msgid "Label with this name already exists."
 msgstr "Метка с таким именем уже существует."
+
+# ===== ПЕРЕВОДЫ ДЛЯ ФИЛЬТРАЦИИ =====
+
+msgid "Apply"
+msgstr "Применить"
+
+msgid "Only my tasks"
+msgstr "Только свои задачи"
+
+msgid "Label"
+msgstr "Метка"
