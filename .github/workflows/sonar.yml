@@ -22,6 +22,10 @@ jobs:
           pip install uv
           make install
 
+      - name: Install ruff
+        run: |
+          pip install ruff
+
       - name: Run linter
         run: |
           make lint
