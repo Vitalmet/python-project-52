@@ -90,6 +90,11 @@ class CustomLoginView(LoginView):
         messages.success(self.request, self.success_message)
         return response
 
+class CustomLogoutView(LogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        messages.success(request, 'Вы разлогинены')
+        return super().dispatch(request, *args, **kwargs)
+
 
 # ========== CRUD для статусов ==========
 

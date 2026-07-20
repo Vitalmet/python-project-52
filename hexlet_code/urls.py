@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from task_manager import views
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.views import CustomLogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -15,7 +15,7 @@ urlpatterns = [
 
     # Аутентификация
     path('login/', views.CustomLoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
 
     # Статусы
     path('statuses/', views.StatusesView.as_view(), name='statuses'),
