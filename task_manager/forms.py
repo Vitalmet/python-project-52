@@ -155,3 +155,8 @@ class TaskForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if self.instance and self.instance.pk:
             self.fields['name'].validators = []
+
+        print("TaskForm initialized")
+        print("Executor queryset count:", self.fields['executor'].queryset.count())
+        print("Status queryset count:", self.fields['status'].queryset.count())
+        print("Labels queryset count:", self.fields['labels'].queryset.count())

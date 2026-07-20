@@ -2,14 +2,39 @@
 {% load django_bootstrap5 %}
 {% load i18n %}
 
-{% block title %}{% trans "Create task" %}{% endblock %}
+{% block title %}Создать задачу{% endblock %}
 
 {% block content %}
 <div class="container col-md-6">
-    <h1 class="my-4">{% trans "Create task" %}</h1>
+    <h1 class="my-4">Создать задачу</h1>
     <form method="post">
         {% csrf_token %}
-        {% bootstrap_form form %}
+
+        <div class="mb-3">
+            <label for="id_name" class="form-label">Имя</label>
+            {{ form.name }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_description" class="form-label">Описание</label>
+            {{ form.description }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_status" class="form-label">Статус</label>
+            {{ form.status }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_executor" class="form-label">Исполнитель</label>
+            {{ form.executor }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_labels" class="form-label">Метки</label>
+            {{ form.labels }}
+        </div>
+
         <button type="submit" class="btn btn-primary">Создать</button>
     </form>
 </div>
