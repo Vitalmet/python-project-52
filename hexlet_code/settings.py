@@ -37,6 +37,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 ROOT_URLCONF = 'hexlet_code.urls'
@@ -123,3 +124,22 @@ MESSAGE_TAGS = {
     messages.WARNING: 'warning',
     messages.ERROR: 'danger',
 }
+
+# ========== НАСТРОЙКИ ROLLBAR ==========
+
+import rollbar
+import sys
+
+ROLLBAR = {
+    'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),
+    'environment': os.getenv('ROLLBAR_ENVIRONMENT', 'development'),
+    'code_version': '1.0',
+    'root': str(BASE_DIR),
+}
+
+# Инициализация Rollbar, если есть токен
+if ROLLBAR['access_token']:
+    rollbar.init(**ROLLBAR)
+if not DEBUG and ROLLBAR['access_token']:
+    # Обработчик для 404 ошибок
+    handler404 = 'hexlet_code.views.handler404'
