@@ -4,7 +4,7 @@ install:
 	uv sync
 
 lint:
-	ruff check task_manager/ hexlet_code/
+	uv run ruff check task_manager/ hexlet_code/
 
 collectstatic:
 	python manage.py collectstatic --noinput
