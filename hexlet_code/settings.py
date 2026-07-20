@@ -1,7 +1,7 @@
 import os
+import rollbar
 from pathlib import Path
 from dotenv import load_dotenv
-import dj_database_url
 from django.contrib.messages import constants as messages
 
 # Загрузка переменных окружения
@@ -125,9 +125,6 @@ MESSAGE_TAGS = {
 }
 
 # ========== НАСТРОЙКИ ROLLBAR ==========
-
-import rollbar
-import sys
 
 ROLLBAR = {
     'access_token': os.getenv('ROLLBAR_ACCESS_TOKEN'),

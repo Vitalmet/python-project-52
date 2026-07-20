@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
@@ -7,9 +7,6 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import logout
 from django.contrib.messages.views import SuccessMessageMixin
-from django.views import View
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from .models import Status, Task, Label
 from django_filters.views import FilterView
 from .filters import TaskFilter
@@ -129,13 +126,6 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
 # ========== CRUD для задач ==========
 
-class TasksView(LoginRequiredMixin, ListView):
-    model = Task
-    template_name = 'tasks.html'
-    context_object_name = 'tasks'
-    ordering = ['id']
-
-
 class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Task
     form_class = TaskForm
@@ -223,7 +213,7 @@ class TasksView(LoginRequiredMixin, FilterView):
     context_object_name = 'tasks'
     filterset_class = TaskFilter
     ordering = ['id']
-    paginate_by = 10  # Опционально: пагинация
+    paginate_by = 10
 
     def get_queryset(self):
         queryset = super().get_queryset()

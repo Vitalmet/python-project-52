@@ -40,7 +40,7 @@ class UserCRUDTest(TestCase):
     def test_user_logout(self):
         """Тест выхода"""
         self.client.login(username='testuser', password='TestPass123!')
-        response = self.client.post(reverse('logout'), follow=True)
+        self.client.post(reverse('logout'), follow=True)
         self.assertFalse('_auth_user_id' in self.client.session)
 
 

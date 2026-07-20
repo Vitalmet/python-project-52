@@ -1,5 +1,5 @@
 from django import forms
-from django_filters import FilterSet, ChoiceFilter, BooleanFilter, ModelMultipleChoiceFilter
+from django_filters import FilterSet, BooleanFilter, ModelMultipleChoiceFilter
 from django_filters.filters import ModelChoiceFilter
 from django.utils.translation import gettext_lazy as _
 from .models import Task, Status, Label
