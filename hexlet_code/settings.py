@@ -110,7 +110,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Настройки аутентификации
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
@@ -140,6 +139,9 @@ ROLLBAR = {
 # Инициализация Rollbar, если есть токен
 if ROLLBAR['access_token']:
     rollbar.init(**ROLLBAR)
-if not DEBUG and ROLLBAR['access_token']:
-    # Обработчик для 404 ошибок
+
+# ========== ОБРАБОТЧИКИ ОШИБОК ==========
+
+# Настройка обработчика 404 для продакшена
+if not DEBUG:
     handler404 = 'hexlet_code.views.handler404'
