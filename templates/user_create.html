@@ -11,22 +11,22 @@
         {% csrf_token %}
 
         <div class="mb-3">
-            <label for="id_first_name" class="form-label">{% trans "First name" %}</label>
+            <label for="id_first_name" class="form-label">Имя</label>
             <input type="text" name="first_name" class="form-control" id="id_first_name" value="{{ form.first_name.value|default:'' }}">
         </div>
 
         <div class="mb-3">
-            <label for="id_last_name" class="form-label">{% trans "Last name" %}</label>
+            <label for="id_last_name" class="form-label">Фамилия</label>
             <input type="text" name="last_name" class="form-control" id="id_last_name" value="{{ form.last_name.value|default:'' }}">
         </div>
 
         <div class="mb-3">
-            <label for="id_username" class="form-label">{% trans "Username" %}</label>
+            <label for="id_username" class="form-label">Имя пользователя</label>
             <input type="text" name="username" class="form-control" id="id_username" value="{{ form.username.value|default:'' }}">
         </div>
 
         <div class="mb-3">
-            <label for="id_password1" class="form-label">{% trans "Password" %}</label>
+            <label for="id_password1" class="form-label">Пароль</label>
             <div class="input-group">
                 <input type="password" name="password1" class="form-control" id="id_password1" required>
                 <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password1', this)">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="id_password2" class="form-label">{% trans "Confirm Password" %}</label>
+            <label for="id_password2" class="form-label">Подтверждение пароля</label>
             <div class="input-group">
                 <input type="password" name="password2" class="form-control" id="id_password2" required>
                 <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password2', this)">
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">{% trans "Register" %}</button>
+        <button type="submit" class="btn btn-primary">Зарегистрировать</button>
     </form>
 </div>
 
