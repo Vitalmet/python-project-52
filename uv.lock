@@ -214,6 +214,41 @@ wheels = [
 ]
 
 [[package]]
+name = "hexlet-code"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "dj-database-url" },
+    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "django-bootstrap5" },
+    { name = "django-filter" },
+    { name = "flake8" },
+    { name = "gunicorn" },
+    { name = "python-dotenv" },
+    { name = "rollbar" },
+    { name = "ruff" },
+    { name = "whitenoise" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "dj-database-url", specifier = ">=3.1.2" },
+    { name = "django", specifier = ">=5" },
+    { name = "django-bootstrap5", specifier = ">=26.2" },
+    { name = "django-filter", specifier = ">=26.1" },
+    { name = "flake8", specifier = ">=7.3.0" },
+    { name = "gunicorn", specifier = ">=26.0.0" },
+    { name = "python-dotenv", specifier = ">=1.2.2" },
+    { name = "rollbar", specifier = ">=1.4.0" },
+    { name = "ruff", specifier = ">=0.15.22" },
+    { name = "whitenoise", specifier = ">=6.12.0" },
+]
+
+[package.metadata.requires-dev]
+dev = []
+
+[[package]]
 name = "idna"
 version = "3.18"
 source = { registry = "https://pypi.org/simple" }
@@ -266,41 +301,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/82/ed/0301aeeac3e5353ef
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0b/d7/1959b9648791274998a9c3526f6d0ec8fd2233e4d4acce81bbae76b44b2a/python_dotenv-1.2.2-py3-none-any.whl", hash = "sha256:1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a", size = 22101, upload-time = "2026-03-01T16:00:25.09Z" },
 ]
-
-[[package]]
-name = "python-project-52"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "dj-database-url" },
-    { name = "django", version = "5.2.16", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
-    { name = "django", version = "6.0.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-    { name = "django-bootstrap5" },
-    { name = "django-filter" },
-    { name = "flake8" },
-    { name = "gunicorn" },
-    { name = "python-dotenv" },
-    { name = "rollbar" },
-    { name = "ruff" },
-    { name = "whitenoise" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "dj-database-url", specifier = ">=3.1.2" },
-    { name = "django", specifier = ">=5" },
-    { name = "django-bootstrap5", specifier = ">=26.2" },
-    { name = "django-filter", specifier = ">=26.1" },
-    { name = "flake8", specifier = ">=7.3.0" },
-    { name = "gunicorn", specifier = ">=26.0.0" },
-    { name = "python-dotenv", specifier = ">=1.2.2" },
-    { name = "rollbar", specifier = ">=1.4.0" },
-    { name = "ruff", specifier = ">=0.15.22" },
-    { name = "whitenoise", specifier = ">=6.12.0" },
-]
-
-[package.metadata.requires-dev]
-dev = []
 
 [[package]]
 name = "requests"
