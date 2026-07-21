@@ -42,6 +42,7 @@
     </div>
 </div>
 
+<!-- ПОКАЗЫВАЕМ СООБЩЕНИЕ ОБ ОТСУТСТВИИ ЗАДАЧ ТОЛЬКО ЕСЛИ НЕТ ЗАДАЧ И НЕТ СООБЩЕНИЙ -->
 {% if tasks %}
     <table class="table table-striped">
         <thead>
@@ -96,8 +97,11 @@
         </tbody>
     </table>
 {% else %}
-    <div class="alert alert-info" role="alert">
-        Пока нет созданных задач.
-    </div>
+    <!-- ПОКАЗЫВАЕМ СООБЩЕНИЕ ТОЛЬКО ЕСЛИ НЕТ СООБЩЕНИЙ ОТ DJANGO -->
+    {% if not messages %}
+        <div class="alert alert-info" role="alert">
+            Пока нет созданных задач.
+        </div>
+    {% endif %}
 {% endif %}
 {% endblock %}
