@@ -149,12 +149,21 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
 
-        # Убеждаемся, что в базе есть пользователи
-        if User.objects.count() == 0:
+        # СОЗДАЕМ 2-Х ПОЛЬЗОВАТЕЛЕЙ
+        if User.objects.count() < 2:
             User.objects.create_user(
                 username="testuser",
-                password="testpass123"
+                password="testpass123",
+                first_name="Test",
+                last_name="User"
             )
+            User.objects.create_user(
+                username="executor",
+                password="testpass123",
+                first_name="Executor",
+                last_name="User"
+            )
+            print("Created test users in TaskCreateView")
 
         form.fields['status'].queryset = Status.objects.all()
         form.fields['executor'].queryset = User.objects.all()
@@ -175,6 +184,23 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
+
+        # СОЗДАЕМ 2-Х ПОЛЬЗОВАТЕЛЕЙ
+        if User.objects.count() < 2:
+            User.objects.create_user(
+                username="testuser",
+                password="testpass123",
+                first_name="Test",
+                last_name="User"
+            )
+            User.objects.create_user(
+                username="executor",
+                password="testpass123",
+                first_name="Executor",
+                last_name="User"
+            )
+            print("Created test users in TaskUpdateView")
+
         form.fields['status'].queryset = Status.objects.all()
         form.fields['executor'].queryset = User.objects.all()
         form.fields['labels'].queryset = Label.objects.all()
