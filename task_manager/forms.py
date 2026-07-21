@@ -192,7 +192,8 @@ class TaskForm(forms.ModelForm):
         self.fields['executor'].queryset = User.objects.all()
         self.fields['status'].queryset = Status.objects.all()
         self.fields['labels'].queryset = Label.objects.all()
-
+        self.fields['executor'].label_from_instance = lambda \
+            obj: obj.get_full_name() if obj.get_full_name() else obj.username
         # Отладка
         print(f"TaskForm init - Executor count: {self.fields['executor'].queryset.count()}")
         if self.fields['executor'].queryset.count() > 0:
