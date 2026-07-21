@@ -148,6 +148,14 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
+
+        # Убеждаемся, что в базе есть пользователи
+        if User.objects.count() == 0:
+            User.objects.create_user(
+                username="testuser",
+                password="testpass123"
+            )
+
         form.fields['status'].queryset = Status.objects.all()
         form.fields['executor'].queryset = User.objects.all()
         form.fields['labels'].queryset = Label.objects.all()

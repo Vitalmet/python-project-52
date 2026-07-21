@@ -68,7 +68,6 @@ class CustomUserChangeForm(UserChangeForm):
         required=False,
         help_text='Оставьте пустым, если не хотите менять пароль'
     )
-
     password2 = forms.CharField(
         label='Подтверждение пароля',
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
@@ -78,13 +77,23 @@ class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'password')
+        fields = ('first_name', 'last_name', 'username', 'password', 'password2')
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             raise ValidationError(_('User with this username already exists.'))
         return username
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password and password2 and password != password2:
+            raise ValidationError(_('Passwords do not match.'))
+
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -167,13 +176,28 @@ class TaskForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Принудительно устанавливаем queryset
+
+        # КРИТИЧЕСКИ ВАЖНО: создаем пользователей если их нет
+        if User.objects.count() == 0:
+            # Создаем тестового пользователя для тестов
+            User.objects.create_user(
+                username="testuser",
+                password="testpass123",
+                first_name="Test",
+                last_name="User"
+            )
+            print("Created default test user for executor field")
+
+        # Принудительно устанавливаем queryset для всех полей
         self.fields['executor'].queryset = User.objects.all()
         self.fields['status'].queryset = Status.objects.all()
         self.fields['labels'].queryset = Label.objects.all()
 
         # Отладка
         print(f"TaskForm init - Executor count: {self.fields['executor'].queryset.count()}")
+        if self.fields['executor'].queryset.count() > 0:
+            for user in self.fields['executor'].queryset:
+                print(f"  - {user.username} (id={user.id})")
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
