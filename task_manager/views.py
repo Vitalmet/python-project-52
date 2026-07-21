@@ -146,6 +146,13 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('tasks')
     success_message = 'Задача успешно создана'
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['status'].queryset = Status.objects.all()
+        form.fields['executor'].queryset = User.objects.all()
+        form.fields['labels'].queryset = Label.objects.all()
+        return form
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -157,6 +164,13 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'task_update.html'
     success_url = reverse_lazy('tasks')
     success_message = 'Задача успешно изменена'
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['status'].queryset = Status.objects.all()
+        form.fields['executor'].queryset = User.objects.all()
+        form.fields['labels'].queryset = Label.objects.all()
+        return form
 
 
 class TaskDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):

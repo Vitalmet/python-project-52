@@ -45,8 +45,6 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
-    password = None
-
     first_name = forms.CharField(
         max_length=150,
         required=False,
@@ -64,16 +62,31 @@ class CustomUserChangeForm(UserChangeForm):
         label='Имя пользователя',
         widget=forms.TextInput(attrs={'class': 'form-control'})
     )
+    password = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=False,
+        help_text='Оставьте пустым, если не хотите менять пароль'
+    )
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username')
+        fields = ('first_name', 'last_name', 'username', 'password')
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exclude(pk=self.instance.pk).exists():
             raise ValidationError(_('User with this username already exists.'))
         return username
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data.get('password')
+        if password:
+            user.set_password(password)
+        if commit:
+            user.save()
+        return user
 
 
 class StatusForm(forms.ModelForm):
@@ -89,7 +102,7 @@ class StatusForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
-        if Status.objects.filter(name=name).exists():
+        if Status.objects.filter(name=name).exclude(pk=self.instance.pk).exists():
             raise ValidationError(_('Status with this name already exists.'))
         return name
 
@@ -107,7 +120,7 @@ class LabelForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
-        if Label.objects.filter(name=name).exists():
+        if Label.objects.filter(name=name).exclude(pk=self.instance.pk).exists():
             raise ValidationError(_('Label with this name already exists.'))
         return name
 
@@ -147,16 +160,6 @@ class TaskForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
-        if Task.objects.filter(name=name).exists():
+        if Task.objects.filter(name=name).exclude(pk=self.instance.pk).exists():
             raise ValidationError(_('Task with this name already exists.'))
         return name
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if self.instance and self.instance.pk:
-            self.fields['name'].validators = []
-
-        print("TaskForm initialized")
-        print("Executor queryset count:", self.fields['executor'].queryset.count())
-        print("Status queryset count:", self.fields['status'].queryset.count())
-        print("Labels queryset count:", self.fields['labels'].queryset.count())
