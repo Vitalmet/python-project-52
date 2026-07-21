@@ -23,7 +23,7 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class UsersView(LoginRequiredMixin, ListView):
+class UsersView(ListView):
     model = User
     template_name = 'users.html'
     context_object_name = 'users'
