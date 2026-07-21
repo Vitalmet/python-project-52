@@ -69,6 +69,13 @@ class CustomUserChangeForm(UserChangeForm):
         help_text='Оставьте пустым, если не хотите менять пароль'
     )
 
+    password2 = forms.CharField(
+        label='Подтверждение пароля',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+        required=False,
+        help_text='Введите пароль еще раз для подтверждения'
+    )
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'password')
@@ -157,6 +164,16 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Принудительно устанавливаем queryset
+        self.fields['executor'].queryset = User.objects.all()
+        self.fields['status'].queryset = Status.objects.all()
+        self.fields['labels'].queryset = Label.objects.all()
+
+        # Отладка
+        print(f"TaskForm init - Executor count: {self.fields['executor'].queryset.count()}")
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
