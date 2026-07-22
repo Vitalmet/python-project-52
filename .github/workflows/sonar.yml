@@ -57,4 +57,5 @@ jobs:
             -Dsonar.exclusions=**/__pycache__/**,**/migrations/**,templates/**,locale/**,**/tests.py
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.coverage.exclusions=**/__pycache__/**,**/migrations/**,**/tests.py
+            -Dsonar.newCode.referenceBranch=main
             -Dsonar.analysis.scm=disabled
