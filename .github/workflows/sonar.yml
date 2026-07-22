@@ -32,7 +32,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          python manage.py migrate
+          cd code && uv run python manage.py migrate || uv run manage.py migrate
 
       - name: Run tests with coverage
         run: |
@@ -41,7 +41,7 @@ jobs:
       - name: Show coverage report
         run: |
           ls -la coverage.xml
-          head -30 coverage.xml
+          head -30 coverage.xml || echo "coverage.xml not found"
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
@@ -58,4 +58,3 @@ jobs:
             -Dsonar.python.coverage.reportPaths=coverage.xml
             -Dsonar.coverage.exclusions=**/__pycache__/**,**/migrations/**,**/tests.py
             -Dsonar.analysis.scm=disabled
-            -Dsonar.coverage.reportPaths=coverage.xml
