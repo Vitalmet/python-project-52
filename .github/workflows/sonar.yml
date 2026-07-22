@@ -30,13 +30,18 @@ jobs:
         run: |
           make lint
 
+      - name: Run migrations
+        run: |
+          python manage.py migrate
+
       - name: Run tests with coverage
         run: |
           make test
 
       - name: Show coverage report
         run: |
-          cat coverage.xml | head -20
+          ls -la coverage.xml
+          head -30 coverage.xml
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
@@ -49,5 +54,6 @@ jobs:
             -Dsonar.projectKey=Vitalmet_python-project-52
             -Dsonar.organization=vitalmet
             -Dsonar.sources=task_manager,hexlet_code
-            -Dsonar.exclusions=**/__pycache__/**,**/migrations/**,templates/**,locale/**
+            -Dsonar.exclusions=**/__pycache__/**,**/migrations/**,templates/**,locale/**,**/tests.py
             -Dsonar.python.coverage.reportPaths=coverage.xml
+            -Dsonar.coverage.exclusions=**/__pycache__/**,**/migrations/**,**/tests.py
