@@ -20,3 +20,11 @@ render-start:
 
 start:
 	python manage.py runserver
+
+test:
+	uv run coverage run manage.py test
+	uv run coverage report
+	uv run coverage xml
+
+test-only:
+	uv run manage.py test

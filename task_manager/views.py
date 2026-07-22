@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +17,9 @@ from .forms import (
     TaskForm,
     LabelForm
 )
+
+
+User = get_user_model()
 
 
 class IndexView(TemplateView):
@@ -90,6 +93,7 @@ class CustomLoginView(LoginView):
         messages.success(self.request, self.success_message)
         return response
 
+
 class CustomLogoutView(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         messages.success(request, 'Вы разлогинены')
@@ -129,12 +133,10 @@ class StatusDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         status = self.get_object()
-        # Проверка, есть ли задачи со статусом
         if hasattr(status, 'tasks') and status.tasks.exists():
             messages.error(request, 'Невозможно удалить статус')
             return redirect('statuses')
         return super().post(request, *args, **kwargs)
-
 
 
 # ========== CRUD для задач ==========
@@ -148,23 +150,6 @@ class TaskCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-
-        # СОЗДАЕМ 2-Х ПОЛЬЗОВАТЕЛЕЙ
-        if User.objects.count() < 2:
-            User.objects.create_user(
-                username="testuser",
-                password="testpass123",
-                first_name="Test",
-                last_name="User"
-            )
-            User.objects.create_user(
-                username="executor",
-                password="testpass123",
-                first_name="Executor",
-                last_name="User"
-            )
-            print("Created test users in TaskCreateView")
-
         form.fields['status'].queryset = Status.objects.all()
         form.fields['executor'].queryset = User.objects.all()
         form.fields['labels'].queryset = Label.objects.all()
@@ -184,22 +169,6 @@ class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-
-        # СОЗДАЕМ 2-Х ПОЛЬЗОВАТЕЛЕЙ
-        if User.objects.count() < 2:
-            User.objects.create_user(
-                username="testuser",
-                password="testpass123",
-                first_name="Test",
-                last_name="User"
-            )
-            User.objects.create_user(
-                username="executor",
-                password="testpass123",
-                first_name="Executor",
-                last_name="User"
-            )
-            print("Created test users in TaskUpdateView")
 
         form.fields['status'].queryset = Status.objects.all()
         form.fields['executor'].queryset = User.objects.all()
@@ -278,7 +247,6 @@ class TasksView(LoginRequiredMixin, FilterView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # Применяем фильтр
         self.filterset = self.filterset_class(
             self.request.GET,
             queryset=queryset,

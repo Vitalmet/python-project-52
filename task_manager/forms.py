@@ -1,9 +1,12 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 from .models import Status, Task, Label
+
+
+User = get_user_model()
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -158,7 +161,7 @@ class TaskForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     executor = forms.ModelChoiceField(
-        queryset=User.objects.all(),
+        queryset=get_user_model().objects.all(),
         label='Исполнитель',
         required=False,
         widget=forms.Select(attrs={'class': 'form-select'})
@@ -177,28 +180,12 @@ class TaskForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # КРИТИЧЕСКИ ВАЖНО: создаем пользователей если их нет
-        if User.objects.count() == 0:
-            # Создаем тестового пользователя для тестов
-            User.objects.create_user(
-                username="testuser",
-                password="testpass123",
-                first_name="Test",
-                last_name="User"
-            )
-            print("Created default test user for executor field")
-
         # Принудительно устанавливаем queryset для всех полей
         self.fields['executor'].queryset = User.objects.all()
         self.fields['status'].queryset = Status.objects.all()
         self.fields['labels'].queryset = Label.objects.all()
         self.fields['executor'].label_from_instance = lambda \
             obj: obj.get_full_name() if obj.get_full_name() else obj.username
-        # Отладка
-        print(f"TaskForm init - Executor count: {self.fields['executor'].queryset.count()}")
-        if self.fields['executor'].queryset.count() > 0:
-            for user in self.fields['executor'].queryset:
-                print(f"  - {user.username} (id={user.id})")
 
     def clean_name(self):
         name = self.cleaned_data.get('name')

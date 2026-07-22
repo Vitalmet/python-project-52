@@ -58,3 +58,6 @@ dmypy.json
 
 # Файлы миграций в __pycache__
 task_manager/migrations/__pycache__/
+coverage.xml
+htmlcov/
+.coverage

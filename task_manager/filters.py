@@ -2,8 +2,9 @@ from django import forms
 from django_filters import FilterSet, BooleanFilter, ModelMultipleChoiceFilter
 from django_filters.filters import ModelChoiceFilter
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
 from .models import Task, Status, Label
-from django.contrib.auth.models import User
+
 
 
 class TaskFilter(FilterSet):
@@ -16,7 +17,7 @@ class TaskFilter(FilterSet):
     executor = ModelChoiceFilter(
         field_name='executor',
         label=_('Executor'),
-        queryset=User.objects.all(),
+        queryset=get_user_model().objects.all(),
         widget=forms.Select(attrs={'class': 'form-select'})
     )
     labels = ModelMultipleChoiceFilter(

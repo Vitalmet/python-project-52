@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User
 from django.urls import reverse
 
 
@@ -61,13 +60,13 @@ class Task(models.Model):
         related_name='tasks'
     )
     author = models.ForeignKey(
-        User,
+        'auth.User',
         on_delete=models.PROTECT,
         verbose_name=_('Author'),
         related_name='authored_tasks'
     )
     executor = models.ForeignKey(
-        User,
+        'auth.User',
         on_delete=models.PROTECT,
         verbose_name=_('Executor'),
         related_name='executed_tasks',
