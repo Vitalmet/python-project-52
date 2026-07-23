@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from task_manager import views
 from task_manager.views import CustomLogoutView
+from hexlet_code import rollbar_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,3 +38,6 @@ urlpatterns = [
     path('labels/<int:pk>/update/', views.LabelUpdateView.as_view(), name='label_update'),
     path('labels/<int:pk>/delete/', views.LabelDeleteView.as_view(), name='label_delete'),
 ]
+
+# Обработчик ошибок
+handler404 = rollbar_views.handler404

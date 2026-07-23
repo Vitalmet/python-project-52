@@ -59,5 +59,3 @@ jobs:
             -Dsonar.coverage.exclusions=**/__pycache__/**,**/migrations/**,**/tests.py
             -Dsonar.newCode.referenceBranch=main
             -Dsonar.analysis.scm=disabled
-            -Dsonar.sources=task_manager,hexlet_code
-            -Dsonar.test.inclusions=**/tests.py
